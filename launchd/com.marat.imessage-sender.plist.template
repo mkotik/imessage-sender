@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Rendered by scripts/install-launchagent.sh; __PLACEHOLDERS__ are substituted. -->
+    <key>Label</key>
+    <string>__LABEL__</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>__NODE_BIN__</string>
+        <string>__REPO_DIR__/dist/src/index.js</string>
+        <string>run</string>
+        <string>--env-file</string>
+        <string>__ENV_FILE__</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>__REPO_DIR__</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>NODE_OPTIONS</key>
+        <string>--disable-warning=ExperimentalWarning</string>
+    </dict>
+
+    <!-- start at login and keep running; launchd throttles restarts to once per ThrottleInterval -->
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+        <key>Crashed</key>
+        <true/>
+    </dict>
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+
+    <!-- low priority background work -->
+    <key>ProcessType</key>
+    <string>Background</string>
+    <key>Nice</key>
+    <integer>10</integer>
+    <key>LowPriorityIO</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>__LOG_DIR__/launchd-stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>__LOG_DIR__/launchd-stderr.log</string>
+
+    <key>ExitTimeOut</key>
+    <integer>30</integer>
+</dict>
+</plist>

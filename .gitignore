@@ -1,0 +1,60 @@
+# --- secrets & local config ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+config.local.*
+
+# --- build & deps ---
+node_modules/
+dist/
+*.tsbuildinfo
+
+# --- local state / logs (should never live in the repo anyway) ---
+state/
+state.json
+*.log
+logs/
+tmp/
+.tmp/
+
+# --- anything that could be message data ---
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.abcddb
+chat.db*
+/Attachments/
+/attachments/
+fixtures/real/
+*.pluginPayloadAttachment
+*.heic
+*.HEIC
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.mov
+*.mp4
+*.m4a
+*.caf
+*.vcf
+*.pdf
+
+# --- macOS private files ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+
+# --- editors ---
+.vscode/
+.idea/
+*.swp
