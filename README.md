@@ -11,7 +11,7 @@ It is the Mac half of a personal-data pipeline for AI agents:
 Mac Messages database (read-only)
   → imessage-sender (this repo)              ← OTPs filtered here, never transmitted
   → HTTPS
-  → VPS ingestion service                    ← separate project, not built yet
+  → VPS ingestion service                    ← github.com/mkotik/imessage-server
   → encrypted message database (SQLCipher)
   → iDrive E2 for encrypted attachments
   → dedicated iMessage MCP
@@ -19,7 +19,7 @@ Mac Messages database (read-only)
 ```
 
 Only the first arrow is implemented here. The receiver contract it speaks is fully specified in
-[`docs/receiver-api.md`](docs/receiver-api.md) so the VPS side can be built against it.
+[`docs/receiver-api.md`](docs/receiver-api.md) which the VPS side (`mkotik/imessage-server`) implements.
 
 - Zero runtime dependencies (Node ≥ 22.13 built-ins only: `node:sqlite`, `fetch`, `node:crypto`).
 - Apple's database is opened with SQLite's read-only flag and never written, migrated or checkpointed.
