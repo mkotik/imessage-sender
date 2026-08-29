@@ -51,7 +51,7 @@ function int(v: string | undefined, def: number, name: string, min = 1): number 
 }
 
 /**
- * Load configuration. Precedence: real environment > explicit env file > ./.env > state-dir config.env.
+ * Load configuration. Precedence: real environment > explicit env file > ./.env.local > ./.env > state-dir config.env.
  * `envFile` may be passed explicitly (CLI --env-file) or via IMESSAGE_SENDER_ENV_FILE.
  */
 export function loadConfig(opts: { envFile?: string; env?: NodeJS.ProcessEnv; cwd?: string } = {}): Config {
@@ -62,6 +62,7 @@ export function loadConfig(opts: { envFile?: string; env?: NodeJS.ProcessEnv; cw
   const candidates = [
     opts.envFile,
     env.IMESSAGE_SENDER_ENV_FILE,
+    join(cwd, ".env.local"),
     join(cwd, ".env"),
     join(stateDirPre, "config.env"),
   ].filter((p): p is string => !!p);

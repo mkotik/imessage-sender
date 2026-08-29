@@ -52,7 +52,10 @@ fi
 mkdir -p "$STATE_DIR" "$LOG_DIR" "$HOME/Library/LaunchAgents"
 chmod 700 "$STATE_DIR" "$LOG_DIR"
 if [[ ! -f "$ENV_FILE" ]]; then
-  if [[ -f "$REPO_DIR/.env" ]]; then
+  if [[ -f "$REPO_DIR/.env.local" ]]; then
+    cp "$REPO_DIR/.env.local" "$ENV_FILE"
+    say "copied .env.local → $ENV_FILE"
+  elif [[ -f "$REPO_DIR/.env" ]]; then
     cp "$REPO_DIR/.env" "$ENV_FILE"
     say "copied .env → $ENV_FILE"
   else

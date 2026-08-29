@@ -193,7 +193,7 @@ npm install
 npm run build
 npm test                                # 255 tests, synthetic data only
 
-cp .env.example .env                    # fill in IMESSAGE_INGEST_URL and the token(s)
+cp .env.example .env.local              # fill in IMESSAGE_INGEST_URL and the token(s)
 npm run doctor                          # read-only checks: permissions, schema, contacts, config
 npm run -s dry-run                      # full parse + filter of your real history, nothing sent
 scripts/install-launchagent.sh          # installs + starts the LaunchAgent
@@ -211,7 +211,7 @@ checkpoint in a separate `dry-run/` state subdirectory, so it never affects the 
 ## Configuration
 
 All settings are environment variables; see [`.env.example`](.env.example) for the full list with
-defaults. Precedence: real environment → `--env-file <path>` → `./.env` →
+defaults. Precedence: real environment → `--env-file <path>` → `./.env.local` → `./.env` →
 `~/Library/Application Support/imessage-sender/config.env`.
 
 | Variable | Purpose |
