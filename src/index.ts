@@ -51,9 +51,9 @@ function parseArgs(argv: string[]): { command: string; envFile?: string; flags: 
 
 async function main(): Promise<number> {
   const { command, envFile, flags } = parseArgs(process.argv.slice(2));
-  const loadCfg = (overrides: Record<string, string> = {}) => {
+  const loadCfg = (overrides: Record<string, string> = {}, allowMissingUrl = false) => {
     for (const [k, v] of Object.entries(overrides)) process.env[k] = v;
-    return loadConfig(envFile ? { envFile } : {});
+    return loadConfig({ ...(envFile ? { envFile } : {}), allowMissingUrl });
   };
 
   switch (command) {
@@ -96,7 +96,7 @@ async function main(): Promise<number> {
     }
 
     case "status": {
-      const cfg = loadCfg({ IMESSAGE_DRY_RUN: process.env.IMESSAGE_INGEST_URL ? "false" : "true" });
+      const cfg = loadCfg({}, true);
       const statePath = join(cfg.stateDir, "state.json");
       if (!existsSync(statePath)) {
         process.stdout.write(`no state yet (${statePath})\n`);
@@ -132,7 +132,7 @@ async function main(): Promise<number> {
     }
 
     case "doctor":
-      return doctor(loadCfg({ IMESSAGE_DRY_RUN: process.env.IMESSAGE_INGEST_URL ? "false" : "true" }));
+      return doctor(loadCfg({}, true));
 
     case "otp-check": {
       const rl = createInterface({ input: process.stdin });
@@ -150,7 +150,7 @@ async function main(): Promise<number> {
     }
 
     case "reset-state": {
-      const cfg = loadCfg({ IMESSAGE_DRY_RUN: "true" });
+      const cfg = loadCfg({}, true);
       const statePath = join(cfg.stateDir, "state.json");
       if (!existsSync(statePath)) {
         process.stdout.write("no state file\n");

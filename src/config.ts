@@ -54,7 +54,7 @@ function int(v: string | undefined, def: number, name: string, min = 1): number 
  * Load configuration. Precedence: real environment > explicit env file > ./.env.local > ./.env > state-dir config.env.
  * `envFile` may be passed explicitly (CLI --env-file) or via IMESSAGE_SENDER_ENV_FILE.
  */
-export function loadConfig(opts: { envFile?: string; env?: NodeJS.ProcessEnv; cwd?: string } = {}): Config {
+export function loadConfig(opts: { envFile?: string; env?: NodeJS.ProcessEnv; cwd?: string; allowMissingUrl?: boolean } = {}): Config {
   const env = opts.env ?? process.env;
   const cwd = opts.cwd ?? process.cwd();
 
@@ -77,8 +77,8 @@ export function loadConfig(opts: { envFile?: string; env?: NodeJS.ProcessEnv; cw
   const allowInsecureHttp = bool(env.IMESSAGE_ALLOW_INSECURE_HTTP, false);
   let ingestUrl = (env.IMESSAGE_INGEST_URL ?? "").trim().replace(/\/+$/, "");
   if (!ingestUrl) {
-    if (!dryRun) throw new ConfigError("IMESSAGE_INGEST_URL is required (or set IMESSAGE_DRY_RUN=true)");
-    ingestUrl = "https://dry-run.invalid";
+    if (!dryRun && !opts.allowMissingUrl) throw new ConfigError("IMESSAGE_INGEST_URL is required (or set IMESSAGE_DRY_RUN=true)");
+    ingestUrl = "https://not-configured.invalid";
   }
   let parsed: URL;
   try {
