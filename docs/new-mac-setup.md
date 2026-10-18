@@ -28,7 +28,7 @@ cp .env.example .env.local && chmod 600 .env.local
 Edit `.env.local` and set:
 
 ```env
-IMESSAGE_INGEST_URL=https://imessage-ingest.deangoldsteen.com
+IMESSAGE_INGEST_URL=https://imessage-ingest.example.com
 IMESSAGE_INGEST_TOKEN=<from secrets.env on the VPS>
 IMESSAGE_CF_ACCESS_CLIENT_ID=<from mac-sender-credentials.txt>     # 39 chars, ends in .access
 IMESSAGE_CF_ACCESS_CLIENT_SECRET=<from mac-sender-credentials.txt> # exactly 64 hex chars
